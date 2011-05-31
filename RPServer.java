@@ -1,29 +1,55 @@
 package com.rproutil;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
+import com.jcraft.jsch.*;
+
 public class RPServer {
-	
 	
 	String serverName;
 	String serverURL;
 	String serverLogin;
 	String serverPassword;
-	RPAccounts[] serverAccounts;
+	ArrayList<RPAccount> serverAccounts;
 	 
 	public RPServer (String name, String sURL, String login, String password) {
 		serverName = name;
 		serverURL = sURL;
 		serverLogin = login;
-		serverPassword = password; 
+		serverPassword = password;
+		serverAccounts = createAccounts();
 	}
 	
-	public Arraylist getAccounts() {
+	public ArrayList<RPAccount> getAccounts() {
 		return serverAccounts;
 	}
 	
 	 
 	
-	 private void createAccounts() {
-	 	//connect to the sURL some how
+	private ArrayList<RPAccount> createAccounts() {
+		
+		ArrayList<RPAccount> accountsArray = null;
+		
+		try{
+			JSch jsch = new JSch();
+			Session session=jsch.getSession(serverLogin, serverURL, 22);
+			session.setPassword(serverPassword);
+			session.connect();
+		    Channel channel=session.openChannel("exec");
+		    ((ChannelExec)channel).setCommand(command);
+		      // get I/O streams for remote scp
+		    OutputStream out=channel.getOutputStream();
+		    InputStream in=channel.getInputStream();
+		    
+		    channel.connect();
+		}
+		catch(Exception e){
+		      System.out.println(e);
+		}
+	
+		
+		//connect to the sURL some how
 		// 
 		// enter login and password
 		// get $MUSE
@@ -36,7 +62,8 @@ public class RPServer {
 		// now you have list of account objects
 		//--
 		// gonna need something like expect some kind of ssh or net jar
-	 }
+		return accountsArray;
+	}
 	 
 	 
 	

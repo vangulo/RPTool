@@ -1,9 +1,8 @@
 package com.rproutil;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.util.*;
-import com.jcraft.jsch.*;
+
 
 public class RPServer {
 	
@@ -31,18 +30,8 @@ public class RPServer {
 		
 		ArrayList<RPAccount> accountsArray = null;
 		
-		try{
-			JSch jsch = new JSch();
-			Session session=jsch.getSession(serverLogin, serverURL, 22);
-			session.setPassword(serverPassword);
-			session.connect();
-		    Channel channel=session.openChannel("exec");
-		    ((ChannelExec)channel).setCommand(command);
-		      // get I/O streams for remote scp
-		    OutputStream out=channel.getOutputStream();
-		    InputStream in=channel.getInputStream();
-		    
-		    channel.connect();
+		try {
+			
 		}
 		catch(Exception e){
 		      System.out.println(e);

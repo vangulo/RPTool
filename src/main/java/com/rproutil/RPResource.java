@@ -11,13 +11,17 @@ public class RPResource {
 
 	 
 	 
-	public RPResource (String name, String location, RPAccount account) {
+	public RPResource (String name, RPAccount account) {
 		resourceName = name;
-		resourceLocation = location;
+		resourceLocation = account.getResourcesLocation() + "sources/lib";
 		resourceAccount = account;
 //		resourceXML = new RPResourceXML(resourceAccount.getLocation());
 	//	resourceVersion = setVersion(resourceLocation);
 				 
+	}
+	
+	public String getName() {
+		return resourceName;
 	}
 	
 	private void setResourceXML() {
